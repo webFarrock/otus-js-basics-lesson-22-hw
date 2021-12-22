@@ -6,7 +6,10 @@ const { resolve } = require("path");
 const { NODE_ENV } = process.env;
 
 module.exports = {
-  entry: resolve(__dirname, "src/index.js"),
+  entry: resolve(__dirname, "src/js/index.ts"),
+  resolve: {
+    extensions: [".js", ".ts"],
+  },
   output: {
     filename: "bundle.js",
     path: resolve(`${__dirname}/dist`),
@@ -19,7 +22,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
         exclude: /(node_modules)/,
         use: {
           loader: "babel-loader",
