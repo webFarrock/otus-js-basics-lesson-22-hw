@@ -1,0 +1,14 @@
+.game{
+  margin-bottom: 25px;
+}
+.game .field-wrapper{
+  margin-bottom: 10px;
+}
+.game .controls-item{
+  margin-bottom: 7px;
+}
+.game table .cell{height:10px; width:10px;}
+
+.game table .alive{background-color:green;}
+.game table .dead{background-color: white}
+.game table .doomed{background-color:black;}

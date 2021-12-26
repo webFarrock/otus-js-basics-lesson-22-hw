@@ -5,7 +5,7 @@ module.exports = {
     es2021: true,
     "jest/globals": true,
   },
-  extends: ["airbnb-base", "prettier", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
@@ -19,6 +19,7 @@ module.exports = {
         ignoreComments: true,
       },
     ],
+    "no-undef": "off",
     "no-console": "off",
     "no-alert": "off",
     "arrow-body-style": 0,
