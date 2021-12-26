@@ -3,7 +3,7 @@
 import { drawField } from "./drawField";
 import { getNextState } from "./getNextState";
 import { isAnyoneAlive } from "./isAnyoneAlive";
-import { iOnCellClick, iRunInterval, tField, tRow } from "./types";
+import { cellState, iOnCellClick, iRunInterval, tField, tRow } from "./types";
 
 const DEFAULT_GAME_SPEED = 2000;
 
@@ -91,7 +91,7 @@ export function createGameOfLife(cols: number, rows: number, htmlElement: HTMLEl
   };
 
   const cellClickHandler: iOnCellClick = (x: number, y: number): void => {
-    field[y][x] = field[y][x] === 0 ? 1 : 0;
+    field[y][x] = field[y][x] === cellState.DEAD ? cellState.ALIVE : cellState.DEAD;
     drawField(fieldWrapper, field, cellClickHandler);
   };
 

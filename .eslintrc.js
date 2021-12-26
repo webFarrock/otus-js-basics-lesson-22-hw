@@ -24,6 +24,7 @@ module.exports = {
     "no-alert": "off",
     "arrow-body-style": 0,
     "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/ban-ts-comment": "off"
   },
   plugins: ["jest", "@typescript-eslint"],
 };

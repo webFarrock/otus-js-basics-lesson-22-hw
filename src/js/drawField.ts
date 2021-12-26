@@ -1,5 +1,4 @@
-import { iOnCellClick, tField, tRow } from "./types";
-import { cellState } from "./types";
+import { cellState, iOnCellClick, tField, tRow } from "./types";
 
 /**
  * отрисовка поля
@@ -11,6 +10,7 @@ import { cellState } from "./types";
 function drawCell(x: number, y: number, state: cellState): string {
   return `<td data-x=${x} data-y=${y} class="cell cell--${getCellCls(state)}"></td>`;
 }
+
 function getCellCls(state: cellState): string {
   switch (state) {
     case cellState.ALIVE:

@@ -1,5 +1,5 @@
 import { getCellState } from "./getCellState";
-import { iAliveNeighboursNum, tField } from "./types";
+import { cellState, iAliveNeighboursNum, tField } from "./types";
 
 /**
  * узнать сколько живых соседей вокруг клетки
@@ -16,15 +16,15 @@ export const getNumOfAliveNeighbours: iAliveNeighboursNum = function (
   let neighbours = 0;
 
   for (let j = column - 1; j <= column + 1; j += 1) {
-    neighbours += getCellState(field, j, row - 1);
+    neighbours += getCellState(field, j, row - 1) === cellState.DEAD ? 0 : 1;
   }
 
   for (let j = column - 1; j <= column + 1; j += 1) {
-    neighbours += getCellState(field, j, row + 1);
+    neighbours += getCellState(field, j, row + 1) === cellState.DEAD ? 0 : 1;
   }
 
-  neighbours += getCellState(field, column - 1, row);
-  neighbours += getCellState(field, column + 1, row);
+  neighbours += getCellState(field, column - 1, row) === cellState.DEAD ? 0 : 1;
+  neighbours += getCellState(field, column + 1, row) === cellState.DEAD ? 0 : 1;
 
   return neighbours;
 };
