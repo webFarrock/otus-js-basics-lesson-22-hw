@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webFarrock/otus-js-basics-lesson-12-hw.git"
+    "url": "git+https://github.com/webFarrock/otus-js-basics-lesson-22-hw.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/webFarrock/otus-js-basics-lesson-12-hw/issues"
+    "url": "https://github.com/webFarrock/otus-js-basics-lesson-22-hw/issues"
   },
-  "homepage": "https://github.com/webFarrock/otus-js-basics-lesson-12-hw#readme",
+  "homepage": "https://github.com/webFarrock/otus-js-basics-lesson-22-hw#readme",
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.5",
