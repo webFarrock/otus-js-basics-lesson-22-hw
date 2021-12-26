@@ -6,37 +6,60 @@ import { isAnyoneAlive } from "./isAnyoneAlive";
 import { iOnCellClick, iRunInterval, tField, tRow } from "./types";
 
 const DEFAULT_GAME_SPEED = 2000;
+
 /**
  * Создание игры Жизнь
- * @param sizeX {number} - число колонок
- * @param sizeY {number} - число строк
+ * @param cols {number} - число колонок
+ * @param rows {number} - число строк
  * @param htmlElement {HTMLElement} - элемент, в котором будет отрисована игра
  * @returns void
  */
-export function createGameOfLife(sizeX: number, sizeY: number, htmlElement: HTMLElement) {
+export function createGameOfLife(cols: number, rows: number, htmlElement: HTMLElement) {
   let gameIsRunning = false;
   let timer: number;
+  let sizeX = cols;
+  let sizeY = rows;
 
   // Создать блок для поля
   // Создать кнопку управления игрой
   htmlElement.classList.add("game");
   htmlElement.innerHTML = `
-    <div class="game__field"></div>
+    
     <div class="game__controls">
         <div class="game__controls-item">
           <label>
-              <input type="number" class="game__speed" value="${DEFAULT_GAME_SPEED}"/>
-              game speed
+            <input type="number" class="game__speed" value="${DEFAULT_GAME_SPEED}"/>
+            game speed
           </label>
+        </div>
+        <div class="game__controls-item">
+          <label>
+            <input type="number" class="game__rows" value="${sizeX}"/>
+            rows
+          </label>
+        </div>
+        <div class="game__controls-item">
+          <label>
+            <input type="number" class="game__cols" value="${sizeY}"/>
+            cols
+          </label>
+        </div>
+        <div class="game__controls-item">
+            <button class="game__random-fill-btn">Random fill</button>
         </div>
         <div class="game__controls-item">
             <button class="game__run-btn">Start</button>
         </div>
     </div>
+    <div class="game__field"></div>
+    <hr>
 `;
   const fieldWrapper = htmlElement.querySelector(".game__field") as HTMLElement;
-  const button = htmlElement.querySelector(".game__run-btn") as HTMLButtonElement;
-  const gameSpeedInput = htmlElement.querySelector(".game__speed") as HTMLButtonElement;
+  const btnStart = htmlElement.querySelector(".game__run-btn") as HTMLButtonElement;
+  const btnRandomFill = htmlElement.querySelector(".game__random-fill-btn") as HTMLButtonElement;
+  const gameSpeedInput = htmlElement.querySelector(".game__speed") as HTMLInputElement;
+  const gameRowsInput = htmlElement.querySelector(".game__rows") as HTMLInputElement;
+  const gameColsInput = htmlElement.querySelector(".game__cols") as HTMLInputElement;
 
   let field: tField = [];
   for (let i = 0; i < sizeY; i++) {
@@ -79,21 +102,22 @@ export function createGameOfLife(sizeX: number, sizeY: number, htmlElement: HTML
   // - перерисовать поле
   function stopGame(): void {
     gameIsRunning = false;
-    button.innerHTML = "Start";
+    btnStart.innerHTML = "Start";
     // При клике на кнопке `Stop` остановить таймер
     clearInterval(timer);
   }
+
   function startGame(): void {
     // При клике по кнопке старт
     // - поменять надпись на `Stop`
     gameIsRunning = true;
-    button.innerHTML = "Stop";
+    btnStart.innerHTML = "Stop";
     // - запустить таймер для обновления поля
     const speed = Number(gameSpeedInput.value);
     timer = runInterval(speed);
   }
 
-  button.addEventListener("click", () => {
+  btnStart.addEventListener("click", () => {
     if (gameIsRunning) {
       stopGame();
     } else {
@@ -101,10 +125,53 @@ export function createGameOfLife(sizeX: number, sizeY: number, htmlElement: HTML
     }
   });
 
-  gameSpeedInput.addEventListener("change", (e) => {
+  btnRandomFill.addEventListener("click", () => {
+    for (let i = 0; i < field.length; i++) {
+      for (let j = 0; j < field[i].length; j++) {
+        field[i][j] = Math.random() >= 0.5 ? 1 : 0;
+      }
+    }
+    drawField(fieldWrapper, field, cellClickHandler);
+  });
+
+  gameSpeedInput.addEventListener("change", () => {
     if (gameIsRunning) {
       stopGame();
       startGame();
     }
+  });
+
+  gameRowsInput.addEventListener("change", (e) => {
+    const target = e.target as HTMLInputElement;
+    const rows = Number(target.value);
+    if (rows > field.length) {
+      for (let i = rows - sizeY; i > 0; i--) {
+        const row: tRow = [];
+        for (let j = 0; j < sizeX; j++) {
+          row.push(0);
+        }
+        field.push(row);
+      }
+    } else {
+      field.splice(rows - sizeY);
+    }
+
+    sizeY = rows;
+    drawField(fieldWrapper, field, cellClickHandler);
+  });
+
+  gameColsInput.addEventListener("change", (e) => {
+    const target = e.target as HTMLInputElement;
+    const cols = Number(target.value);
+
+    for (let i = 0; i < sizeY; i++) {
+      if (field[i].length < cols) {
+        field[i].push(0);
+      } else {
+        field[i].splice(cols - sizeX);
+      }
+    }
+    sizeX = cols;
+    drawField(fieldWrapper, field, cellClickHandler);
   });
 }
