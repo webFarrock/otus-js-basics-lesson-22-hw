@@ -9,7 +9,7 @@ import { cellState } from "./types";
  * @returns void
  */
 function drawCell(x: number, y: number, state: cellState): string {
-  return `<td data-x=${x} data-y=${y} class="cell ${getCellCls(state)}"></td>`;
+  return `<td data-x=${x} data-y=${y} class="cell cell--${getCellCls(state)}"></td>`;
 }
 function getCellCls(state: cellState): string {
   switch (state) {

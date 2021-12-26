@@ -1,4 +1,4 @@
-import "../css/style.css";
+import "../css/style.scss";
 import { createGameOfLife } from "./createGameOfLife";
 
 const gameWrapper1 = document.createElement("div");

@@ -21,22 +21,22 @@ export function createGameOfLife(sizeX: number, sizeY: number, htmlElement: HTML
   // Создать кнопку управления игрой
   htmlElement.classList.add("game");
   htmlElement.innerHTML = `
-    <div class="field-wrapper"></div>
-    <div class="controls">
-        <div class="controls-item">
+    <div class="game__field"></div>
+    <div class="game__controls">
+        <div class="game__controls-item">
           <label>
-              <input type="number" class="game-speed" value="${DEFAULT_GAME_SPEED}"/>
+              <input type="number" class="game__speed" value="${DEFAULT_GAME_SPEED}"/>
               game speed
           </label>
         </div>
-        <div class="controls-item">
-            <button>Start</button>
+        <div class="game__controls-item">
+            <button class="game__run-btn">Start</button>
         </div>
     </div>
 `;
-  const fieldWrapper = htmlElement.querySelector(".field-wrapper") as HTMLElement;
-  const button = htmlElement.querySelector("button") as HTMLButtonElement;
-  const gameSpeedInput = htmlElement.querySelector(".game-speed") as HTMLButtonElement;
+  const fieldWrapper = htmlElement.querySelector(".game__field") as HTMLElement;
+  const button = htmlElement.querySelector(".game__run-btn") as HTMLButtonElement;
+  const gameSpeedInput = htmlElement.querySelector(".game__speed") as HTMLButtonElement;
 
   let field: tField = [];
   for (let i = 0; i < sizeY; i++) {
