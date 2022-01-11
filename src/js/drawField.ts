@@ -39,6 +39,11 @@ export function drawField(htmlElement: HTMLElement, field: tField, onCellClick: 
 
   elTable.addEventListener("click", (ev) => {
     const clickedElement = ev.target as HTMLElement;
+
+    if (clickedElement.tagName !== "TD") {
+      return;
+    }
+
     const x = Number(clickedElement.getAttribute("data-x"));
     const y = Number(clickedElement.getAttribute("data-y"));
     if (x >= 0 && y >= 0) {
