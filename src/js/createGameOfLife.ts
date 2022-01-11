@@ -6,6 +6,9 @@ import { isAnyoneAlive } from "./isAnyoneAlive";
 import { cellState, iOnCellClick, iRunInterval, tField, tRow } from "./types";
 
 const DEFAULT_GAME_SPEED = 2000;
+const GAME_MIN_SPEED = 1000;
+const GAME_MIN_SIZE_COLS = 3;
+const GAME_MIN_SIZE_ROWS = 3;
 
 /**
  * Создание игры Жизнь
@@ -28,19 +31,19 @@ export function createGameOfLife(cols: number, rows: number, htmlElement: HTMLEl
     <div class="game__controls">
         <div class="game__controls-item">
           <label>
-            <input type="number" class="game__speed" value="${DEFAULT_GAME_SPEED}"/>
+            <input type="number" min="${GAME_MIN_SPEED}" step="1000" class="game__speed" value="${DEFAULT_GAME_SPEED}"/>
             game speed
           </label>
         </div>
         <div class="game__controls-item">
           <label>
-            <input type="number" class="game__rows" value="${sizeX}"/>
+            <input type="number" min="${GAME_MIN_SIZE_ROWS}" class="game__rows" value="${sizeX}"/>
             rows
           </label>
         </div>
         <div class="game__controls-item">
           <label>
-            <input type="number" class="game__cols" value="${sizeY}"/>
+            <input type="number" min="${GAME_MIN_SIZE_COLS}" class="game__cols" value="${sizeY}"/>
             cols
           </label>
         </div>
@@ -113,7 +116,7 @@ export function createGameOfLife(cols: number, rows: number, htmlElement: HTMLEl
     gameIsRunning = true;
     btnStart.innerHTML = "Stop";
     // - запустить таймер для обновления поля
-    const speed = Number(gameSpeedInput.value);
+    const speed = parseInt(gameSpeedInput.value);
     timer = runInterval(speed);
   }
 
@@ -134,7 +137,14 @@ export function createGameOfLife(cols: number, rows: number, htmlElement: HTMLEl
     drawField(fieldWrapper, field, cellClickHandler);
   });
 
-  gameSpeedInput.addEventListener("change", () => {
+  gameSpeedInput.addEventListener("change", (e) => {
+    const target = e.target as HTMLInputElement;
+    const value = parseInt(target.value);
+    const min = parseInt(target.min);
+    if (value < min) {
+      target.value = `${min}`;
+    }
+
     if (gameIsRunning) {
       stopGame();
       startGame();
@@ -143,7 +153,13 @@ export function createGameOfLife(cols: number, rows: number, htmlElement: HTMLEl
 
   gameRowsInput.addEventListener("change", (e) => {
     const target = e.target as HTMLInputElement;
-    const rows = Number(target.value);
+    let rows = parseInt(target.value);
+    const min = parseInt(target.min);
+    if (rows < min) {
+      rows = min;
+      target.value = `${min}`;
+    }
+
     if (rows > field.length) {
       for (let i = rows - sizeY; i > 0; i--) {
         const row: tRow = [];
@@ -162,7 +178,12 @@ export function createGameOfLife(cols: number, rows: number, htmlElement: HTMLEl
 
   gameColsInput.addEventListener("change", (e) => {
     const target = e.target as HTMLInputElement;
-    const cols = Number(target.value);
+    let cols = parseInt(target.value);
+    const min = parseInt(target.min);
+    if (cols < min) {
+      cols = min;
+      target.value = `${min}`;
+    }
 
     for (let i = 0; i < sizeY; i++) {
       if (field[i].length < cols) {
