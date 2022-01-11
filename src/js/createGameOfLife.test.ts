@@ -205,7 +205,12 @@ describe("createGameOfLife", () => {
       gameColsInput.value = `2`;
       gameColsInput.dispatchEvent(new Event("change"));
 
-      expect(fieldEl.innerHTML).toBe(`drawField(${JSON.stringify([[cellState.DEAD, cellState.DEAD]])})`);
+      expect(fieldEl.innerHTML).toBe(
+        `drawField(${JSON.stringify([
+          [cellState.DEAD, cellState.DEAD],
+          [cellState.DEAD, cellState.DEAD],
+        ])})`
+      );
     });
   });
 });

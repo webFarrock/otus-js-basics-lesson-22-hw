@@ -7,8 +7,8 @@ import { cellState, iOnCellClick, iRunInterval, tField, tRow } from "./types";
 
 const DEFAULT_GAME_SPEED = 2000;
 const GAME_MIN_SPEED = 1000;
-const GAME_MIN_SIZE_COLS = 3;
-const GAME_MIN_SIZE_ROWS = 3;
+const GAME_MIN_SIZE_COLS = 2;
+const GAME_MIN_SIZE_ROWS = 2;
 
 /**
  * Создание игры Жизнь
